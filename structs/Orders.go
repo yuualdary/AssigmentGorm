@@ -11,6 +11,7 @@ type Orders struct {
 	Order_id      uint      `gorm:"primaryKey;autoIncrement:true`
 	Customer_name string    `json:"costumer_name"`
 	ordered_at    time.Time `gorm:"default:CURRENT_TIMESTAMP" json:"ordered_at"`
+	Item          []Items   `json:"Item" gorm:"foreignkey:Order_id"`
 }
 
 // func (Orders) TableName() string {

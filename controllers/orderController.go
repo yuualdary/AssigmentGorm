@@ -9,6 +9,10 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+func GetCurrentOrder(c *gin.Context) {
+
+}
+
 func CreateOrder(c *gin.Context) {
 
 	var (
