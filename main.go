@@ -17,8 +17,9 @@ func main() {
 
 	//route
 
-	// router.PUT("/update/:id", controllers.UpdateOrder)
+	router.PUT("/update/:id", controllers.UpdateOrder)
 	router.POST("/create", controllers.CreateOrder)
+	router.GET("/order/:id", controllers.GetCurrentOrderById)
 
 	router.Run(":3000")
 

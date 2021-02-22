@@ -2,16 +2,15 @@ package structs
 
 import (
 	"time"
-
-	"github.com/jinzhu/gorm"
 )
 
 type Orders struct {
-	gorm.Model
-	Order_id      uint      `gorm:"primaryKey;autoIncrement:true`
-	Customer_name string    `json:"costumer_name"`
+	// gorm.Model
+	Order_id      int       `gorm:" primary_key"`
+	Customer_name string    `gorm:"type:varchar(100)"`
 	ordered_at    time.Time `gorm:"default:CURRENT_TIMESTAMP" json:"ordered_at"`
-	Item          []Items   `json:"Item" gorm:"foreignkey:Order_id"`
+	Items         []Items   `gorm:"foreignkey:Order_id"`
+	//kalau mau automigrate di migrate dulu tanpa fk, baru setelah migrate masukkan fknya
 }
 
 // func (Orders) TableName() string {

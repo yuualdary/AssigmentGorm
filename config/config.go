@@ -1,6 +1,8 @@
 package config
 
 import (
+	// "Assigment2/structs"
+
 	"Assigment2/structs"
 	"fmt"
 	"log"
@@ -19,13 +21,19 @@ func ConnectDatabase() {
 	if err != nil {
 		log.Fatal(err.Error())
 	}
+	db.AutoMigrate(structs.Items{}, structs.Orders{})
 
 	fmt.Println("Connected to Database")
-	db.AutoMigrate(structs.Items{}, structs.Orders{})
 	// db.Model(&structs.Items{}).AddForeignKey("o_id", "orders(Order_id)", "RESTRICT", "RESTRICT")
 
-	db.Migrator().CreateConstraint(&structs.Orders{}, "Item")
-	db.Migrator().CreateConstraint(&structs.Orders{}, "fk_orders_to_items")
+	// db.Migrator().CreateConstraint(&structs.Orders{}, "Items")
+	// db.Migrator().CreateConstraint(&structs.Orders{}, "fk_orders_to_items")
+
+	// db.Migrator().HasConstraint(&structs.Orders{}, "Items")
+	// db.Migrator().HasConstraint(&structs.Orders{}, "fk_orders_to_items")
+
+	// db.Migrator().DropConstraint(&structs.Orders{}, "Items")
+	// db.Migrator().DropConstraint(&structs.Orders{}, "fk_orders_to_items")
 
 	DB = db
 }
