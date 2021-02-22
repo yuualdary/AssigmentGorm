@@ -11,15 +11,14 @@ import (
 
 func main() {
 
-	db := config.DBInit()
-	inDB := &controllers.InDB{DB: db}
+	router := gin.Default()
 
-	var router = gin.Default()
+	config.ConnectDatabase()
 
 	//route
 
-	router.PUT("/update/:id", inDB.UpdateOrder)
-	router.POST("/create", inDB.CreateOrder)
+	// router.PUT("/update/:id", controllers.UpdateOrder)
+	router.POST("/create", controllers.CreateOrder)
 
 	router.Run(":3000")
 

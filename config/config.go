@@ -2,16 +2,30 @@ package config
 
 import (
 	"Assigment2/structs"
+	"fmt"
+	"log"
 
-	"github.com/jinzhu/gorm"
+	"gorm.io/driver/mysql"
+	"gorm.io/gorm"
+	// "github.com/jinzhu/gorm"
 )
 
-func DBInit() *gorm.DB {
-	db, err := gorm.Open("mysql", "root:@tcp(127.0.0.1:3306)/assigment2?charset=utf8&parseTime=True&loc=Local")
-	if err != nil {
-		panic("failed to connect to database")
-	}
-	db.AutoMigrate(structs.Items{}, structs.Orders{})
+var DB *gorm.DB
 
-	return db
+func ConnectDatabase() {
+	dsn := "root: @tcp(127.0.0.1:3306)/assigment2?charset=utf8mb4&parseTime=True&loc=Local"
+	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
+
+	if err != nil {
+		log.Fatal(err.Error())
+	}
+
+	fmt.Println("Connected to Database")
+	db.AutoMigrate(structs.Items{}, structs.Orders{})
+	db.Model(&structs.Items{}).AddForeignKey("o_id", "orders(Order_id)", "RESTRICT", "RESTRICT")
+
+	db.Migrator().CreateConstraint(&structs.Items{}, "CreditCards")
+	db.Migrator().CreateConstraint(&structs.Items{}, "Order_id")
+
+	DB = db
 }
